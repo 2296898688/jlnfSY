@@ -1,0 +1,6 @@
+{
+  "name": "Traceability Management System",
+  "description": "A high-fidelity prototype for product batch traceability, QR code generation, and journey tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
