@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+export interface Attachment {
+  name: string;
+  url: string;
+}
+
 export interface TimelineItem {
   id: string;
   title: string;
@@ -29,6 +34,7 @@ export interface Batch {
   productIntro?: string;
   topLabel?: string;
   location?: string;
+  attachments?: Attachment[];
   timelineItems: TimelineItem[];
 }
 

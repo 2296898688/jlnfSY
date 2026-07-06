@@ -3,7 +3,7 @@ import {
   Plus, Search, LayoutGrid, QrCode, Eye, Trash2, Edit3,
   ChevronLeft, ChevronRight, X, Info, Check, Image as ImageIcon,
   ArrowLeft, Database, Send, XCircle,
-  Calendar, Quote, MapPin, Leaf, Award, CheckCircle2, Star, ShieldCheck,
+  Calendar, Quote, MapPin, Leaf, Award, CheckCircle2, Star, ShieldCheck, Paperclip, Download,
   AlertCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -611,6 +611,35 @@ export default function App() {
                   </p>
                 </div>
 
+                {/* Attachments */}
+                {(selectedBatch.attachments || []).length > 0 && (
+                  <div className="pt-2 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1 h-3 bg-blue-600 rounded-full"></div>
+                      <h3 className="text-sm font-bold text-slate-800">产品附件</h3>
+                    </div>
+                    <div className="space-y-2">
+                      {(selectedBatch.attachments || []).map((att, i) => (
+                        <a
+                          key={i}
+                          href={att.url}
+                          download={att.name}
+                          className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all"
+                        >
+                          <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500 shrink-0">
+                            <Paperclip className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-bold text-slate-700 truncate">{att.name}</p>
+                            <p className="text-[10px] text-slate-400">点击下载</p>
+                          </div>
+                          <Download className="w-4 h-4 text-blue-500 shrink-0" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Timeline Header */}
                 <div className="flex items-center justify-center py-4">
                   <div className="h-px w-full bg-slate-200"></div>
@@ -1101,6 +1130,64 @@ export default function App() {
                       />
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Section: Attachments */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-emerald-600">
+                  <div className="w-1.5 h-4 bg-emerald-600 rounded-full"></div>
+                  <h3 className="font-bold">产品附件</h3>
+                  <span className="text-xs text-slate-400 font-normal">上传质检报告、认证证书等文件，将在H5页面展示</span>
+                </div>
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+                  {/* Upload Area */}
+                  <label className="flex items-center justify-center gap-2 p-6 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-blue-400 hover:bg-slate-50 transition-colors">
+                    <Paperclip className="w-5 h-5 text-slate-400" />
+                    <span className="text-sm font-bold text-slate-500">点击上传附件</span>
+                    <span className="text-xs text-slate-400">支持 PDF、图片、文档等</span>
+                    <input
+                      type="file"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (ev) => {
+                            const newAttach = { name: file.name, url: ev.target?.result as string };
+                            handleUpdateBatchField('attachments', [...(selectedBatch.attachments || []), newAttach]);
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+
+                  {/* Attachment List */}
+                  {(selectedBatch.attachments || []).length > 0 && (
+                    <div className="space-y-2">
+                      {(selectedBatch.attachments || []).map((att, i) => (
+                        <div key={i} className="flex items-center justify-between px-4 py-3 bg-slate-50 rounded-xl border border-slate-100">
+                          <div className="flex items-center gap-3">
+                            <Paperclip className="w-4 h-4 text-blue-500" />
+                            <div>
+                              <p className="text-sm font-bold text-slate-700">{att.name}</p>
+                              <p className="text-[10px] text-slate-400">已上传</p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => {
+                              const newAttachments = (selectedBatch.attachments || []).filter((_, idx) => idx !== i);
+                              handleUpdateBatchField('attachments', newAttachments);
+                            }}
+                            className="p-1.5 text-slate-400 hover:text-red-500 transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
