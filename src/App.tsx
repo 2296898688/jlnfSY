@@ -996,6 +996,27 @@ export default function App() {
               </div>
             </div>
 
+            {/* Published Warning */}
+            {selectedBatch.status === 'published' && (
+              <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-5 py-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 shrink-0">
+                    <AlertCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-amber-800 text-sm">该批次已发布，内容为只读状态</p>
+                    <p className="text-amber-600 text-xs mt-0.5">如需修改溯源内容或调整顺序，请先将批次撤回为草稿</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleStatusUpdate(selectedBatch.id, 'draft')}
+                  className="px-4 py-2 bg-white border border-amber-300 text-amber-700 text-sm font-bold rounded-lg hover:bg-amber-100 transition-colors shrink-0"
+                >
+                  撤回草稿
+                </button>
+              </div>
+            )}
+
             {/* Split Config Grid */}
             <div className="grid grid-cols-1 gap-8">
               {/* Section: Landing Page Config */}
@@ -1012,7 +1033,7 @@ export default function App() {
                         label="首屏背景图"
                         value={selectedBatch.imageUrl}
                         onChange={(url) => handleUpdateBatchField('imageUrl', url)}
-                        aspect="aspect-square w-40"
+                        aspect="aspect-square w-24"
                       />
                       <p className="text-[11px] text-slate-400">建议尺寸 750×1334px，将叠加黑色半透明蒙层</p>
                     </div>
@@ -1130,22 +1151,13 @@ export default function App() {
                     >
                       <Plus className="w-4 h-4" /> 添加溯源条目
                     </button>
-                    {selectedBatch.status === 'published' && (
-                      <div className="p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-start gap-2">
-                        <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                        <p className="text-[10px] text-amber-700 font-medium leading-relaxed">已发布状态下无法增删环节或调整顺序。如需修改，请先将批次「撤回为草稿」。</p>
-                      </div>
-                    )}
                   </div>
 
                   {/* Entry Detail Editor */}
-                  <div className={`lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-8 relative ${selectedBatch.status === 'published' ? 'opacity-80' : ''}`}>
-                    {selectedBatch.status === 'published' && (
-                       <div className="absolute inset-0 z-10 bg-white/10 cursor-not-allowed" title="已发布状态，只读模式" />
-                    )}
+                  <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-8 relative">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm">{activeNodeIndex + 1}</div>
-                      <h4 className="font-bold text-lg">编辑条目内容 {selectedBatch.status === 'published' && <span className="text-amber-600 text-xs ml-2 font-normal">(已发布，只读)</span>}</h4>
+                      <h4 className="font-bold text-lg">编辑条目内容</h4>
                     </div>
                     
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
