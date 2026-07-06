@@ -344,7 +344,7 @@ export default function App() {
   const [selectedBatch, setSelectedBatch] = useState<Batch | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [showNewBatchModal, setShowNewBatchModal] = useState(false);
-  const [newBatchImage, setNewBatchImage] = useState('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&h=400');
+  const [newBatchImage, setNewBatchImage] = useState('');
   const [showQRModal, setShowQRModal] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<{ id: string } | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -1330,7 +1330,7 @@ export default function App() {
                     label="产品封面图"
                     value={newBatchImage}
                     onChange={setNewBatchImage}
-                    aspect="aspect-video"
+                    aspect="aspect-square w-36"
                   />
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
