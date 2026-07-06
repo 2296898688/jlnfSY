@@ -1245,25 +1245,26 @@ export default function App() {
         )}
       </main>
 
-      {/* New Batch Modal */}
+      {/* New Batch Drawer */}
       <AnimatePresence>
         {showNewBatchModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
-            <motion.div 
+          <div className="fixed inset-0 z-50">
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowNewBatchModal(false)}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
             />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden"
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="absolute right-0 top-0 h-full w-full max-w-xl bg-white shadow-2xl overflow-y-auto"
             >
               <div className="p-8 space-y-8">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between sticky top-0 bg-white pb-4 border-b border-slate-100">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm">
                       <Plus className="w-7 h-7" />
@@ -1283,8 +1284,8 @@ export default function App() {
                     <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                       产品名称 <span className="px-1.5 py-0.5 bg-red-50 text-red-500 text-[10px] rounded uppercase font-bold">必填</span>
                     </label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="productName"
                       placeholder='请输入产品名称，如"东北大米"'
                       className={`w-full px-4 py-3 bg-slate-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all
@@ -1298,7 +1299,7 @@ export default function App() {
                       产品分类 <span className="px-1.5 py-0.5 bg-red-50 text-red-500 text-[10px] rounded uppercase font-bold">必填</span>
                     </label>
                     <div className="relative">
-                      <select 
+                      <select
                         name="category"
                         className={`w-full appearance-none px-4 py-3 bg-slate-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-500
                           ${formErrors.category ? 'border-red-500 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'}`}
@@ -1313,7 +1314,7 @@ export default function App() {
                     {formErrors.category && <p className="text-[10px] text-red-500 font-bold pl-1">{formErrors.category}</p>}
                   </div>
 
-                  <ImageUpload 
+                  <ImageUpload
                     label="产品封面图"
                     value={newBatchImage}
                     onChange={setNewBatchImage}
@@ -1323,7 +1324,7 @@ export default function App() {
                     <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                       批次备注 <span className="text-slate-400 font-normal uppercase text-[10px] bg-slate-50 px-1.5 py-0.5 rounded">选填</span>
                     </label>
-                    <textarea 
+                    <textarea
                       rows={3}
                       placeholder="可填写产地、年份、特殊说明等备注信息"
                       className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all resize-none"
@@ -1350,14 +1351,14 @@ export default function App() {
                   </div>
 
                   <div className="flex items-center gap-3 pt-4">
-                    <button 
+                    <button
                       type="button"
                       onClick={() => setShowNewBatchModal(false)}
                       className="flex-1 py-3 font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors shadow-sm"
                     >
                       取消
                     </button>
-                    <button 
+                    <button
                       type="submit"
                       className="flex-1 py-3 font-bold text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-200"
                     >
