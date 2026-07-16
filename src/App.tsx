@@ -580,10 +580,14 @@ export default function App() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <div className="flex items-center gap-1.5 text-emerald-800 font-bold text-sm">
-                <Leaf className="w-4 h-4" />
-                {selectedBatch.topLabel || '农品溯源'}
-              </div>
+              {selectedBatch.status === 'published' || previousView === 'config' ? (
+                <div className="flex items-center gap-1.5 text-emerald-800 font-bold text-sm">
+                  <Leaf className="w-4 h-4" />
+                  {selectedBatch.topLabel || '农品溯源'}
+                </div>
+              ) : (
+                <div />
+              )}
               <div className="w-5 h-5"></div>
             </header>
 
