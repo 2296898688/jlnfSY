@@ -827,22 +827,13 @@ export default function App() {
               </>
               ) : (
                 /* 产品已下架 - 停用展示 */
-                <div className="flex flex-col items-center justify-center h-full px-8 py-16">
-                  <div className="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mb-8">
-                    <Ban className="w-12 h-12 text-red-400" />
+                <div className="flex flex-col items-center justify-center h-full px-8 py-20">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-6">
+                    <Ban className="w-8 h-8 text-slate-300" />
                   </div>
-                  <h2 className="text-xl font-bold text-slate-700 mb-3">该产品已下架</h2>
-                  <p className="text-sm text-slate-400 text-center leading-relaxed mb-10">
-                    该产品溯源信息暂不可见，<br />如有疑问请联系客服。
-                  </p>
-                  <div className="bg-white rounded-xl border border-slate-100 px-6 py-4 w-full max-w-[280px] text-center shadow-sm">
-                    <p className="text-[11px] text-slate-400 font-medium">产品名称</p>
-                    <p className="text-sm font-bold text-slate-600 mt-1">{selectedBatch.productName || '—'}</p>
-                  </div>
-                  {selectedBatch.batchNumber && (
-                    <div className="mt-3 text-[10px] text-slate-300 font-mono">
-                      批次：{selectedBatch.batchNumber}
-                    </div>
+                  <p className="text-base font-bold text-slate-400">该产品已下架</p>
+                  {selectedBatch.productName && (
+                    <p className="text-xs text-slate-300 mt-2">{selectedBatch.productName}</p>
                   )}
                 </div>
               )}
